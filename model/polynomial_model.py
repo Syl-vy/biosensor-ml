@@ -27,7 +27,7 @@ y_pred = model.predict(X_poly)
 r2 = r2_score(y, y_pred)
 
 # Save performance to file
-with open("output/model_performance.txt", "w") as f:
+with open("output/polynomial_model_performance.txt", "w") as f:
     f.write(f"Polynomial Regression Model\n")
     f.write(f"R² Score: {r2:.4f}\n")
 
