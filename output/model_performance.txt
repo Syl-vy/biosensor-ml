@@ -1,0 +1,2 @@
+Polynomial Regression Model
+R² Score: 0.9999
