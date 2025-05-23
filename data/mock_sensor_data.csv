@@ -1,0 +1,6 @@
+radius,refractive_index,absorption_peak_freq
+20,1.33,0.212
+30,1.34,0.225
+40,1.35,0.237
+50,1.36,0.250
+60,1.37,0.262
