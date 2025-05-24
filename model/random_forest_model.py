@@ -1,42 +1,33 @@
-from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.metrics import r2_score
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score, mean_squared_error
 import os
 
-# Set up directories
+df = pd.read_csv("data/sensor_data.csv")
+X = df[["radius", "refractive_index"]]
+y = df["absorption_peak_freq"]
+
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+r2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+
 os.makedirs("output", exist_ok=True)
+with open("output/random_forest_results.txt", "w") as f:
+    f.write(f"Random Forest\nR²: {r2:.4f}\nMSE: {mse:.6f}\n")
 
-# Load data
-data = pd.read_csv("data/mock_sensor_data.csv")
-X = data[["radius", "refractive_index"]]
-y = data["absorption_peak_freq"]
-
-
-rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
-rf_model.fit(X, y)
-rf_pred = rf_model.predict(X)
-
-rf_r2 = r2_score(y, rf_pred)
-print(f"Random Forest R² Score: {rf_r2:.4f}")
-
-# Save performance
-with open("output/random_forest_model_performance.txt", "a") as f:
-    f.write(f"\nRandom Forest Regressor\nR² Score: {rf_r2:.4f}\n")
-
-# Plot predictions
-plt.figure(figsize=(8, 6))
-plt.scatter(y, rf_pred, color='green', label='Random Forest')
-plt.plot([min(y), max(y)], [min(y), max(y)], color='red', linestyle='--', label='Ideal')
-plt.xlabel("Actual Absorption Frequency (THz)")
-plt.ylabel("Predicted Absorption Frequency (THz)")
-plt.title("Random Forest - Absorption Prediction")
+plt.figure(figsize=(8,6))
+plt.scatter(y_test, y_pred, color='green', label='Predicted vs Actual')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], 'r--', label='Ideal Fit')
+plt.xlabel("Actual Frequency")
+plt.ylabel("Predicted Frequency")
+plt.title("Random Forest Regression")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("output/rf_prediction_plot.png")
-print("Random Forest plot saved to output/rf_prediction_plot.png")
-
+plt.savefig("output/random_forest_plot.png")

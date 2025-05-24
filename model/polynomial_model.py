@@ -1,47 +1,44 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import PolynomialFeatures
-from sklearn.metrics import r2_score
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error
+import matplotlib.pyplot as plt
 import os
 
-# Set up directories
-os.makedirs("output", exist_ok=True)
+# Load dataset
+df = pd.read_csv("data/sensor_data.csv")
+X = df[["radius", "refractive_index"]]
+y = df["absorption_peak_freq"]
 
-# Load data
-data = pd.read_csv("data/mock_sensor_data.csv")
-X = data[["radius", "refractive_index"]]
-y = data["absorption_peak_freq"]
-
-# Polynomial features
+# Create polynomial features
 poly = PolynomialFeatures(degree=2)
 X_poly = poly.fit_transform(X)
 
 # Train model
 model = LinearRegression()
-model.fit(X_poly, y)
-y_pred = model.predict(X_poly)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+r2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
 
-# Evaluate
-r2 = r2_score(y, y_pred)
+# Output folder
+os.makedirs("output", exist_ok=True)
 
-# Save performance to file
-with open("output/polynomial_model_performance.txt", "w") as f:
-    f.write(f"Polynomial Regression Model\n")
-    f.write(f"R² Score: {r2:.4f}\n")
+# Save performance
+with open("output/polynomial_results.txt", "w") as f:
+    f.write(f"Polynomial Regression\nR²: {r2:.4f}\nMSE: {mse:.6f}\n")
 
-print(f"Model trained. R² Score: {r2:.4f}")
-
-# Plot predictions vs actual
-plt.figure(figsize=(8, 6))
-plt.scatter(y, y_pred, color='blue', label='Predicted vs Actual')
-plt.plot([min(y), max(y)], [min(y), max(y)], color='red', linestyle='--', label='Ideal Line')
-plt.xlabel("Actual Absorption Frequency (THz)")
-plt.ylabel("Predicted Absorption Frequency (THz)")
-plt.title("Polynomial Regression - Absorption Peak Prediction")
+# Plot
+plt.figure(figsize=(8,6))
+plt.scatter(y_test, y_pred, color='green', label='Predicted vs Actual')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], 'r--', label='Ideal Fit')
+plt.xlabel("Actual Frequency")
+plt.ylabel("Predicted Frequency")
+plt.title("Polynomial Regression")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("output/polynomial_prediction_plot.png")
-print("Plot saved to output/polynomial_prediction_plot.png")
+plt.savefig("output/polynomial_regression_plot.png")
