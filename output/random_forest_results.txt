@@ -1,3 +1,0 @@
-Random Forest
-R²: 0.9753
-MSE: 0.000032

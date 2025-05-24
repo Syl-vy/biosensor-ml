@@ -1,3 +1,0 @@
-Polynomial Regression
-R²: 0.9821
-MSE: 0.000023
