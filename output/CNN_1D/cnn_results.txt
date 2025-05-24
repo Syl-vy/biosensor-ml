@@ -1,0 +1,4 @@
+1D CNN Evaluation Results
+R² Score: 0.9810
+MSE: 0.000025
+MAE: 0.003726

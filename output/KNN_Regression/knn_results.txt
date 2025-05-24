@@ -1,0 +1,3 @@
+KNN Regression
+R²: 0.9737
+MSE: 0.000034
