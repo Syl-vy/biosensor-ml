@@ -1,12 +1,12 @@
 # Biosensor Machine Learning Model
 
-This project predicts the absorption peak frequency of a metasurface-based SPR biosensor using polynomial regression.
+This project predicts the absorption peak frequency of a metasurface-based SPR biosensor using multiple regression models and a CNN model.
 
 ## Folder Structure
 
 - `data/`: Contains the mock sensor data.
 - `output/`: Stores the model evaluation and prediction plot.
-- `sensor_ml_model.py`: Main script to run the ML model.
+- `model/`: Stores the code for all models.
 
 ## How to Run
 
