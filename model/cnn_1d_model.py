@@ -45,7 +45,7 @@ mae = mean_absolute_error(y_test, y_pred)
 os.makedirs("output", exist_ok=True)
 
 # Save evaluation metrics
-with open("output/cnn_results.txt", "w") as f:
+with open("output/CNN_1D/cnn_results.txt", "w") as f:
     f.write("1D CNN Evaluation Results\n")
     f.write(f"R² Score: {r2:.4f}\n")
     f.write(f"MSE: {mse:.6f}\n")
@@ -61,7 +61,7 @@ plt.title("1D CNN - Predicted vs Actual")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("output/cnn_prediction_plot.png")
+plt.savefig("output/CNN_1D/cnn_prediction_plot.png")
 
 # Training & validation loss plot
 plt.figure(figsize=(8, 6))
@@ -73,4 +73,4 @@ plt.title("1D CNN - Training vs Validation Loss")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("output/cnn_training_curve.png")
+plt.savefig("output/CNN_1D/cnn_training_curve.png")

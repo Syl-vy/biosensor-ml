@@ -18,7 +18,7 @@ r2 = r2_score(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 
 os.makedirs("output", exist_ok=True)
-with open("output/knn_results.txt", "w") as f:
+with open("output/KNN_Regression/knn_results.txt", "w") as f:
     f.write(f"KNN Regression\nR²: {r2:.4f}\nMSE: {mse:.6f}\n")
 
 plt.figure(figsize=(8,6))
@@ -30,4 +30,4 @@ plt.title("KNN Regression")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("output/knn_plot.png")
+plt.savefig("output/KNN_Regression/knn_plot.png")

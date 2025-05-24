@@ -28,7 +28,7 @@ mse = mean_squared_error(y_test, y_pred)
 os.makedirs("output", exist_ok=True)
 
 # Save performance
-with open("output/polynomial_results.txt", "w") as f:
+with open("output/Polynomial_Regression/polynomial_results.txt", "w") as f:
     f.write(f"Polynomial Regression\nR²: {r2:.4f}\nMSE: {mse:.6f}\n")
 
 # Plot
@@ -41,4 +41,4 @@ plt.title("Polynomial Regression")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("output/polynomial_regression_plot.png")
+plt.savefig("output/Polynomial_Regression/polynomial_regression_plot.png")
