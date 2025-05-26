@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import r2_score, mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import os
 
 df = pd.read_csv("data/sensor_data.csv")
@@ -16,10 +16,11 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 r2 = r2_score(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
 
 os.makedirs("output", exist_ok=True)
 with open("output/Random_Forest/random_forest_results.txt", "w") as f:
-    f.write(f"Random Forest\nR²: {r2:.4f}\nMSE: {mse:.6f}\n")
+    f.write(f"Random Forest\nR²: {r2:.4f}\nMSE: {mse:.6f}\nMAE: {mae:.6f}\n")
 
 plt.figure(figsize=(8,6))
 plt.scatter(y_test, y_pred, color='green', label='Predicted vs Actual')

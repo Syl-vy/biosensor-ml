@@ -1,3 +1,4 @@
 KNN Regression
 R²: 0.9737
 MSE: 0.000034
+MAE: 0.004883
